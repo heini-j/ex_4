@@ -182,8 +182,8 @@ def update_hand(hand, word):
 
     new_hand = dict(hand)  # copying the hand to an updated hand
 
-    for char in word:
-        new_hand[char] = new_hand[char] - 1
+    for letter in word:
+        new_hand[letter] = new_hand[letter] - 1
 
     return new_hand
 
@@ -202,7 +202,20 @@ def is_valid_word(word, hand, word_list):
     hand: dictionary (string -> int)
     word_list: list of lowercase strings
     """
-    # TO DO ... <-- Remove this comment when you code this function
+    # first condition: do we have enough letters in hand
+    for letter in word:
+        count = word.count(letter)
+        if (
+            hand.get(letter, 0) - count < 0
+        ):  # hand.get returns the number of occurence of letter in word, if none it returns zero
+            return False
+
+    # second condition: does the word exist in the word list
+    for item in word_list:
+        if item == word:
+            return True
+
+    return False
 
 
 #
