@@ -266,27 +266,55 @@ def play_hand(hand, word_list, n):
     # BEGIN PSEUDOCODE <-- Remove this comment when you code this function; do your coding within the pseudocode (leaving those comments in-place!)
     # Keep track of the total score
 
-    # As long as there are still letters left in the hand:
+    for word in hand:
+        new_score = 0
+        new_score += get_word_score(word, n)
+        print(new_score)
 
-    # Display the hand
+        # As long as there are still letters left in the hand:
 
-    # Ask user for input
+        calculate_hand_length(hand)
 
-    # If the input is a single period:
+        # Display the hand
 
-    # End the game (break out of the loop)
+        display_hand(hand)
 
-    # Otherwise (the input is not a single period):
+        # Ask user for input
 
-    # If the word is not valid:
+        word = input('Enter word, or a "." to indicate that you are finished: ')
 
-    # Reject invalid word (print a message followed by a blank line)
+        # If the input is a single period:
 
-    # Otherwise (the word is valid):
+        if word == ".":
 
-    # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
+            # End the game (break out of the loop)
+            print("Game ended")
+            break
+        # Otherwise (the input is not a single period):
 
-    # Update the hand
+        # If the word is not valid:
+
+        elif is_valid_word(word, hand, word_list) is False:
+
+            # Reject invalid word (print a message followed by a blank line)
+            print(f"{word} is not a valid word")
+
+        # Otherwise (the word is valid):
+
+        else:
+            print(f"{word} is valid")
+
+        # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
+
+        print(
+            f'"{word}" earned ',
+            get_word_score(word, n),
+            " points\. Total: {new_score} points",
+        )
+
+        # Update the hand
+
+        update_hand(hand, word)
 
     # Game is over (user entered a '.' or ran out of letters), so tell user the total score
 
@@ -294,6 +322,9 @@ def play_hand(hand, word_list, n):
 #
 # Problem #5: Playing a game
 #
+
+word_list = load_words()
+play_hand({"h": 1, "i": 1, "c": 1, "z": 1, "m": 2, "a": 1}, word_list, 7)
 
 
 def play_game(word_list):
