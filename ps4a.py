@@ -147,7 +147,7 @@ def deal_hand(n):
     returns: dictionary (string -> int)
     """
     hand = {}
-    num_vowels = n // 3
+    num_vowels = n // 3  # rounds the division to the nearest integer
 
     for i in range(num_vowels):
         x = VOWELS[random.randrange(0, len(VOWELS))]
@@ -235,6 +235,8 @@ def calculate_hand_length(hand):
 
     for letter in hand:
         hand_lenght += hand[letter]
+    if hand_lenght == 0:
+        print("No more letters to play")
 
     return hand_lenght
 
