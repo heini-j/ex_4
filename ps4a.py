@@ -269,6 +269,7 @@ def play_hand(hand, word_list, n):
     # Keep track of the total score
 
     final_score = 0
+    N = len(hand)
 
     for word in hand:
 
@@ -312,8 +313,8 @@ def play_hand(hand, word_list, n):
 
                 # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
 
-                print(f"{word} earned {get_word_score(word, n)} points!")
-                final_score += get_word_score(word, n)
+                print(f"{word} earned {get_word_score(word, N)} points!")
+                final_score += get_word_score(word, N)
                 print(f"Total score: {final_score}")
 
                 # Update the hand
@@ -327,7 +328,7 @@ def play_hand(hand, word_list, n):
 
 
 word_list = load_words()
-play_hand({"n": 1, "e": 1, "t": 1, "a": 1, "r": 1, "i": 2}, word_list, HAND_SIZE)
+play_hand({"w": 1, "s": 1, "t": 2, "a": 1, "o": 1, "f": 1}, word_list, HAND_SIZE)
 
 
 #
@@ -347,6 +348,7 @@ def play_game(word_list):
 
     2) When done playing the hand, repeat from step 1
     """
+
     # TO DO ... <-- Remove this comment when you code this function
     print(
         "play_game not yet implemented."
