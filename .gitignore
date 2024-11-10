@@ -1,3 +1,7 @@
 #list of words
 
 words.txt
+
+#cache
+
+__pycache__
