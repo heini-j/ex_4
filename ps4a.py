@@ -306,12 +306,6 @@ def play_hand(hand, word_list, n):
 
         # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
 
-        print(
-            f'"{word}" earned ',
-            get_word_score(word, n),
-            " points\. Total: {new_score} points",
-        )
-
         # Update the hand
 
         update_hand(hand, word)
