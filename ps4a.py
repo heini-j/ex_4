@@ -40,7 +40,9 @@ SCRABBLE_LETTER_VALUES = {
 # Helper code
 # (you don't need to understand this helper code)
 
-WORDLIST_FILENAME = "words.txt"
+import os
+
+WORDLIST_FILENAME = os.path.join(f"{__file__}", "..", "words.txt")
 
 
 def load_words():
@@ -266,14 +268,17 @@ def play_hand(hand, word_list, n):
     # BEGIN PSEUDOCODE <-- Remove this comment when you code this function; do your coding within the pseudocode (leaving those comments in-place!)
     # Keep track of the total score
 
+    final_score = 0
+
     for word in hand:
-        new_score = 0
-        new_score += get_word_score(word, n)
-        print(new_score)
 
         # As long as there are still letters left in the hand:
+        if n == 0:
+            print("Run out of letters.")
+            break
 
-        calculate_hand_length(hand)
+        else:
+            print(f"You have {calculate_hand_length(hand)} letters left: ")
 
         # Display the hand
 
@@ -281,44 +286,53 @@ def play_hand(hand, word_list, n):
 
         # Ask user for input
 
-        word = input('Enter word, or a "." to indicate that you are finished: ')
+        word = input('Enter word, or a "." to indicate that you are finished playing: ')
 
         # If the input is a single period:
 
         if word == ".":
 
             # End the game (break out of the loop)
-            print("Game ended")
             break
+
         # Otherwise (the input is not a single period):
 
-        # If the word is not valid:
-
-        elif is_valid_word(word, hand, word_list) is False:
-
-            # Reject invalid word (print a message followed by a blank line)
-            print(f"{word} is not a valid word")
-
-        # Otherwise (the word is valid):
-
         else:
-            print(f"{word} is valid")
 
-        # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
+            # If the word is not valid:
 
-        # Update the hand
+            if is_valid_word(word, hand, word_list) is False:
 
-        update_hand(hand, word)
+                # Reject invalid word (print a message followed by a blank line)
+                print("Invalid word, please try again.")
+
+            # Otherwise (the word is valid):
+
+            else:
+
+                # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
+
+                print(f"{word} earned {get_word_score(word, n)} points!")
+                final_score += get_word_score(word, n)
+                print(f"Total score: {final_score}")
+
+                # Update the hand
+
+                hand = update_hand(hand, word)
+                n -= len(word)
 
     # Game is over (user entered a '.' or ran out of letters), so tell user the total score
+
+    print(f"Game ended. Your total score is {final_score}")
+
+
+word_list = load_words()
+play_hand({"n": 1, "e": 1, "t": 1, "a": 1, "r": 1, "i": 2}, word_list, HAND_SIZE)
 
 
 #
 # Problem #5: Playing a game
 #
-
-word_list = load_words()
-play_hand({"h": 1, "i": 1, "c": 1, "z": 1, "m": 2, "a": 1}, word_list, 7)
 
 
 def play_game(word_list):
