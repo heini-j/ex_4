@@ -5,7 +5,7 @@ import string
 
 VOWELS = "aeiou"
 CONSONANTS = "bcdfghjklmnpqrstvwxyz"
-HAND_SIZE = 7
+HAND_SIZE = 15
 
 SCRABBLE_LETTER_VALUES = {
     "a": 1,
@@ -324,7 +324,7 @@ def play_hand(hand, word_list, n):
 
     # Game is over (user entered a '.' or ran out of letters), so tell user the total score
 
-    print(f"Game ended. Your total score is {final_score}")
+    print(f"Game ended. Your total score is {final_score}", end="\n")
 
 
 #
@@ -332,7 +332,7 @@ def play_hand(hand, word_list, n):
 #
 
 
-def play_game(word_list):
+def play_game(word_list, hand, play_count):
     """
     Allow the user to play an arbitrary number of hands.
 
@@ -345,39 +345,30 @@ def play_game(word_list):
     2) When done playing the hand, repeat from step 1
     """
 
-    while True:
+    answer = input(
+        "Enter n to deal a new hand, r to replay the last hand, or e to end game:"
+    )
 
-        answer = input(
-            "Enter n to deal a new hand, r to replay the last hand, or e to end game: "
-        )
+    if answer == "n":
+        hand = deal_hand(HAND_SIZE)
+        play_hand(hand, word_list, HAND_SIZE)
+        play_game(word_list, hand, play_count + 1)
 
-        play_count = 1
-
-        n = deal_hand(HAND_SIZE), word_list, HAND_SIZE
-
-        if answer == "n":
-            play_count += 1
-            play_hand(n)
-            play_game(word_list)
-
-        elif answer == "r":
-            if play_count == 1:
-                print("You have not played a hand yet. Please play a new hand first!")
-                play_game(word_list)
-            else:
-                play_game(play_hand(n))
-
-        elif answer == "e":
-            print("Game ended")
-
-            return False
-
+    elif answer == "r":
+        if play_count == 1:
+            print("You have not played a hand yet. Please play a new hand first!")
+            play_game(word_list, hand, play_count)
         else:
-            print("Invalid command.")
+            play_hand(hand, word_list, HAND_SIZE)
+            play_game(word_list, hand, play_count + 1)
 
-    # TO DO ... <-- Remove this comment when you code this function
+    elif answer == "e":
+        print("Game ended", end=" ")
 
-    # <-- Remove this line when you code the function
+        return False
+
+    else:
+        print("Invalid command.")
 
 
 #
@@ -385,4 +376,6 @@ def play_game(word_list):
 #
 if __name__ == "__main__":
     word_list = load_words()
-    play_game(word_list)
+    initial_hand = deal_hand(HAND_SIZE)
+    play_count = 1
+    play_game(word_list, initial_hand, play_count)
