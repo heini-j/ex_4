@@ -327,10 +327,6 @@ def play_hand(hand, word_list, n):
     print(f"Game ended. Your total score is {final_score}")
 
 
-word_list = load_words()
-play_hand({"w": 1, "s": 1, "t": 2, "a": 1, "o": 1, "f": 1}, word_list, HAND_SIZE)
-
-
 #
 # Problem #5: Playing a game
 #
@@ -349,10 +345,39 @@ def play_game(word_list):
     2) When done playing the hand, repeat from step 1
     """
 
+    while True:
+
+        answer = input(
+            "Enter n to deal a new hand, r to replay the last hand, or e to end game: "
+        )
+
+        play_count = 1
+
+        n = deal_hand(HAND_SIZE), word_list, HAND_SIZE
+
+        if answer == "n":
+            play_count += 1
+            play_hand(n)
+            play_game(word_list)
+
+        elif answer == "r":
+            if play_count == 1:
+                print("You have not played a hand yet. Please play a new hand first!")
+                play_game(word_list)
+            else:
+                play_game(play_hand(n))
+
+        elif answer == "e":
+            print("Game ended")
+
+            return False
+
+        else:
+            print("Invalid command.")
+
     # TO DO ... <-- Remove this comment when you code this function
-    print(
-        "play_game not yet implemented."
-    )  # <-- Remove this line when you code the function
+
+    # <-- Remove this line when you code the function
 
 
 #
