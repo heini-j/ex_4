@@ -5,7 +5,7 @@ import string
 
 VOWELS = "aeiou"
 CONSONANTS = "bcdfghjklmnpqrstvwxyz"
-HAND_SIZE = 7
+HAND_SIZE = 15
 
 SCRABBLE_LETTER_VALUES = {
     "a": 1,
@@ -324,11 +324,7 @@ def play_hand(hand, word_list, n):
 
     # Game is over (user entered a '.' or ran out of letters), so tell user the total score
 
-    print(f"Game ended. Your total score is {final_score}")
-
-
-word_list = load_words()
-play_hand({"w": 1, "s": 1, "t": 2, "a": 1, "o": 1, "f": 1}, word_list, HAND_SIZE)
+    print(f"Game ended. Your total score is {final_score}", end="\n")
 
 
 #
@@ -336,7 +332,7 @@ play_hand({"w": 1, "s": 1, "t": 2, "a": 1, "o": 1, "f": 1}, word_list, HAND_SIZE
 #
 
 
-def play_game(word_list):
+def play_game(word_list, hand, play_count):
     """
     Allow the user to play an arbitrary number of hands.
 
@@ -349,10 +345,30 @@ def play_game(word_list):
     2) When done playing the hand, repeat from step 1
     """
 
-    # TO DO ... <-- Remove this comment when you code this function
-    print(
-        "play_game not yet implemented."
-    )  # <-- Remove this line when you code the function
+    answer = input(
+        "Enter n to deal a new hand, r to replay the last hand, or e to end game:"
+    )
+
+    if answer == "n":
+        hand = deal_hand(HAND_SIZE)
+        play_hand(hand, word_list, HAND_SIZE)
+        play_game(word_list, hand, play_count + 1)
+
+    elif answer == "r":
+        if play_count == 1:
+            print("You have not played a hand yet. Please play a new hand first!")
+            play_game(word_list, hand, play_count)
+        else:
+            play_hand(hand, word_list, HAND_SIZE)
+            play_game(word_list, hand, play_count + 1)
+
+    elif answer == "e":
+        print("Game ended", end=" ")
+
+        return False
+
+    else:
+        print("Invalid command.")
 
 
 #
@@ -360,4 +376,6 @@ def play_game(word_list):
 #
 if __name__ == "__main__":
     word_list = load_words()
-    play_game(word_list)
+    initial_hand = deal_hand(HAND_SIZE)
+    play_count = 1
+    play_game(word_list, initial_hand, play_count)
